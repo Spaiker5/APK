@@ -1,0 +1,53 @@
+WindowManager:
+    MainWindow:
+    SecondWindow:
+
+<MainWindow>:
+    name: "main"
+    GridLayout:
+        cols:1
+        size: root.width, root.height
+        GridLayout:
+            rows:3
+
+
+            TextInput:
+                id: input_name
+                multiline:False
+                hint_text: "Fitrack"
+
+            Button:
+                text: "Submit"
+                on_release:
+                    track_name = input_name.text
+                    app.root.current = "second"
+
+
+<SecondWindow>:
+    name: "second"
+
+    GridLayout:
+        cols:1
+        size: root.width, root.height
+        GridLayout:
+            rows:4
+
+            Label:
+                text: app.gps_location
+
+            Label:
+                text: app.gps_status
+
+            ToggleButton:
+                    text: 'Start' if self.state == 'normal' else 'Stop'
+                    on_state:
+                        app.start(1000, 0) if self.state == 'down' else \
+                        app.stop()
+
+            Button:
+                text: "Go Back"
+                on_release:
+                    app.root.current = "main"
+
+
+
